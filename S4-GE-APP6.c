@@ -94,8 +94,8 @@ unsigned char SWT_GetValue_Local(unsigned char);
 int main(void) {
     // Static declarations allow variables to be visible in debugger at all times
 
-    //static double spectralResolution=1;     // THIS LINE WAS THE ORIGINAL
-    static double spectralResolution=FFT_LEN;     // THIS LINE HAS BEEN MODIFIED
+    static double spectralResolution=1;     // THIS LINE WAS THE ORIGINAL
+    //static double spectralResolution=(double)Fe / (double)FFT_LEN;     // THIS LINE HAS BEEN MODIFIED
     static int32_t *previousInBuffer, *previousOutBuffer;
     static int maxN, maxVal, maxAmplFreq;
     bool SW7StateChange, SW6StateChange, SW5StateChange, SW4StateChange, SW3StateChange,
@@ -122,6 +122,7 @@ int main(void) {
 
     // Calculate sampling frequency
     Fe = PeripheralClockFrequency / PR3;
+    spectralResolution = (double)Fe / (double)FFT_LEN;   // THIS LINE HAS BEEN MODIFIED
 
     // Calculate spectral resolution, use (double) type casting for parameters
     // *** POINT A1: spectralResolution =...
