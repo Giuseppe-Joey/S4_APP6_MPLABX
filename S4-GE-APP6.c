@@ -93,7 +93,9 @@ unsigned char SWT_GetValue_Local(unsigned char);
 
 int main(void) {
     // Static declarations allow variables to be visible in debugger at all times
-    static double spectralResolution=1;
+
+    //static double spectralResolution=1;     // THIS LINE WAS THE ORIGINAL
+    static double spectralResolution=FFT_LEN;     // THIS LINE HAS BEEN MODIFIED
     static int32_t *previousInBuffer, *previousOutBuffer;
     static int maxN, maxVal, maxAmplFreq;
     bool SW7StateChange, SW6StateChange, SW5StateChange, SW4StateChange, SW3StateChange,
@@ -323,6 +325,8 @@ int main(void) {
 }
 
 
+
+
 //
 // Calculation of power spectrum in dB: 10log(|X[k]|^2)
 //
@@ -345,11 +349,25 @@ int main(void) {
 //    add "1" to the log10() operand: log10(blah + 1).
 //
 
-void calc_power_spectrum(int32c *inbuf, int32_t *outbuf, int n) {
-    double re, im;
 
-    // *** POINT A3: Complete the calc_power_spectrum() function
+
+
+// *** POINT A3: Complete the calc_power_spectrum() function
+// THIS FUNCTION HAS BEEN MODIFIED
+void calc_power_spectrum(int32c *inbuf, int32_t *outbuf, int n) {
+    
+    int k;
+    double re, im, module;
+    
+    for (k = 0; k < n; k++) {
+        re = inbuf[k].re;
+        im = inbuf[k].im;
+        module = sqrt(pow(re,2) + pow(im,2));
+        outbuf[k] = 10*log10(module + 1);
+    }
 }
+
+
 
 
 //
