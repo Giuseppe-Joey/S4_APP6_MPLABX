@@ -55,6 +55,7 @@
 
 // MCC-generated configuration include files
 #include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/adc1.h"
 
 // Main program include file
 #include "S4-GE-APP6.h"
